@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../LipReading/lr_mainview.dart';
 import '../tabbar_mainview.dart';
 import 'findpassword.dart';
 import 'signup.dart';
@@ -75,110 +76,110 @@ class _LoginPageState extends State<LoginPage> {
                   stops: [0.3, 0.7, 0.9, ],
                 ),
               ),
-          // color: Color(0xfff0f8ff),
-          child: Container(
-            padding: EdgeInsets.all(30),
-            child: new Form(
-              key: _formKey,
-              child: new Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(
-                        left: 0.0, top: 0.0, right: 0.0, bottom: 20.0),
-                    alignment: Alignment.center,
-                    child: new Text(
-                      "로그인",
-                      style: new TextStyle(
-                          fontSize: 32.0,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff4478FF)),
-                    ),
-                  ),
+              // color: Color(0xfff0f8ff),
+              child: Container(
+                padding: EdgeInsets.all(30),
+                child: new Form(
+                  key: _formKey,
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(
+                            left: 0.0, top: 0.0, right: 0.0, bottom: 20.0),
+                        alignment: Alignment.center,
+                        child: new Text(
+                          "로그인",
+                          style: new TextStyle(
+                              fontSize: 32.0,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff4478FF)),
+                        ),
+                      ),
 
-                  Container(
-                    child: new Column(
-                      children: <Widget>[
-                        new TextFormField(
-                          decoration: new InputDecoration(labelText: 'Email'),
-                          validator: (value) =>
+                      Container(
+                        child: new Column(
+                          children: <Widget>[
+                            new TextFormField(
+                              decoration: new InputDecoration(labelText: 'Email'),
+                              validator: (value) =>
                               value!.isEmpty ? 'Email can\'t be empty' : null,
-                          onSaved: (value) => _email = value!,
-                        ),
-                        new TextFormField(
-                          obscureText: true,
-                          decoration:
+                              onSaved: (value) => _email = value!,
+                            ),
+                            new TextFormField(
+                              obscureText: true,
+                              decoration:
                               new InputDecoration(labelText: 'Password'),
-                          validator: (value) => value!.isEmpty
-                              ? 'Password can\'t be empty'
-                              : null,
-                          onSaved: (value) => _password = value!,
-                        ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              TextButton(
-                                onPressed: forgotPassword,
-                                child: const Text(
-                                  "비밀번호 찾기",
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    color: Color(0xff666666),
-                                  ),
-                                ),
-                              )
-                            ])
-                      ],
-                    ),
-                  ),
-
-                  //로그인
-                  Container(
-                    margin: EdgeInsets.only(left: 0.0, top: 40.0, right: 0.0, bottom: 10.0),
-
-                    child: new RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)
-                      ),
-                      color: Color(0xff4478FF),
-                      child: new Text(
-                        '로그인',
-                        style: new TextStyle(
-                          fontSize: 18.0,
-                          color: Color(0xffFFFFFF),
+                              validator: (value) => value!.isEmpty
+                                  ? 'Password can\'t be empty'
+                                  : null,
+                              onSaved: (value) => _password = value!,
+                            ),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  TextButton(
+                                    onPressed: forgotPassword,
+                                    child: const Text(
+                                      "비밀번호 찾기",
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Color(0xff666666),
+                                      ),
+                                    ),
+                                  )
+                                ])
+                          ],
                         ),
                       ),
-                      onPressed: validateAndSave,
-                    ),
-                    height: 45,
-                  ),
 
-                  //회원가입
-                  Container(
-                    margin: EdgeInsets.only(
-                        left: 0.0, top: 10.0, right: 0.0, bottom: 0.0),
-                    child: new RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)
-                      ),
-                      color: Color(0xff4478FF),
-                      child: new Text(
-                        '회원가입',
-                        style: new TextStyle(
-                          fontSize: 18.0,
-                          color: Color(0xffFFFFFF),
+                      //로그인
+                      Container(
+                        margin: EdgeInsets.only(left: 0.0, top: 40.0, right: 0.0, bottom: 10.0),
+
+                        child: new RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)
+                          ),
+                          color: Color(0xff4478FF),
+                          child: new Text(
+                            '로그인',
+                            style: new TextStyle(
+                              fontSize: 18.0,
+                              color: Color(0xffFFFFFF),
+                            ),
+                          ),
+                          onPressed: validateAndSave,
                         ),
+                        height: 45,
                       ),
-                      onPressed: signUp,
-                    ),
-                    height: 45,
+
+                      //회원가입
+                      Container(
+                        margin: EdgeInsets.only(
+                            left: 0.0, top: 10.0, right: 0.0, bottom: 0.0),
+                        child: new RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)
+                          ),
+                          color: Color(0xff4478FF),
+                          child: new Text(
+                            '회원가입',
+                            style: new TextStyle(
+                              fontSize: 18.0,
+                              color: Color(0xffFFFFFF),
+                            ),
+                          ),
+                          onPressed: signUp,
+                        ),
+                        height: 45,
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-        )));
+            )));
   }
 
   void signIn(String email, pass) async {
@@ -217,7 +218,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pop(context);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => tabBarMainPage()),
+          MaterialPageRoute(builder: (context) => lrselectModeMainPage()),
         );
       }
       else{
