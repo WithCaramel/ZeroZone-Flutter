@@ -25,17 +25,19 @@ class _changePasswordPageState extends State<changePasswordPage> {
 
   changePassword(String pass) async {
     if(_formKey2.currentState!.validate()){
-      var url = Uri.http('${serverHttp}:8080', '/user/password/lost');
+      var url = Uri.http('${serverHttp}:8080', '/members/password');
 
       print(widget.email);
 
-      final data = jsonEncode({'email': widget.email, 'password': pass});
+      final data = jsonEncode({'email': widget.email, 'newPassword': pass});
 
-      var response = await http.post(url, body: data, headers: {'Accept': 'application/json', "content-type": "application/json"} );
+      var response = await http.patch(url, body: data, headers: {'Accept': 'application/json', "content-type": "application/json"} );
 
       print(response.statusCode);
       print("pass: ${pass}");
       print("data: ${data}");
+
+      print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
 
       if (response.statusCode == 200) {
         print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');

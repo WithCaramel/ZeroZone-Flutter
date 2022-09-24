@@ -25,7 +25,7 @@ class _findPasswordPageState extends State<findPasswordPage> {
   Future<void> emailAuth(String email) async {
 
 
-    var url = Uri.http('${serverHttp}:8080', 'email/code/pwd/send');
+    var url = Uri.http('${serverHttp}:8080', '/members/auth-code/send');
 
     final data = jsonEncode({'email': email});
 
@@ -39,7 +39,7 @@ class _findPasswordPageState extends State<findPasswordPage> {
 
       var body = jsonDecode(response.body);
 
-      if(body["result"] != "fail"){
+      if(body["success"] == true){
         showDialog<String>(
           context: context,
           builder: (BuildContext context) => AlertDialog(
@@ -91,11 +91,11 @@ class _findPasswordPageState extends State<findPasswordPage> {
 
   checkAuthCode(String email, authCode) async {
 
-    var url = Uri.http('${serverHttp}:8080', '/email/code/pwd/verify');
+    var url = Uri.http('${serverHttp}:8080', '/members/auth-code/verify');
 
     final data = jsonEncode({'email': email, 'authCode': authCode});
 
-    var response = await http.post(url, body: data, headers: {'Accept': 'application/json', "content-type": "application/json"} );
+    var response = await http.patch(url, body: data, headers: {'Accept': 'application/json', "content-type": "application/json"} );
 
     print(response.statusCode);
 
@@ -104,11 +104,11 @@ class _findPasswordPageState extends State<findPasswordPage> {
 
       var body = jsonDecode(response.body);
 
-      String data = body["result"];
+      bool data = body["success"];
 
-      print("result: " + data.toString());
+      //print("result: " + data);
 
-      if(data == "success"){
+      if(data == true){
         showDialog<String>(
           context: context,
           builder: (BuildContext context) => AlertDialog(
@@ -157,47 +157,6 @@ class _findPasswordPageState extends State<findPasswordPage> {
     }
 
   }
-
-  sendPassword(String email) async {
-
-    var url = Uri.http('${serverHttp}:8080', '/email/pwd');
-
-    final data = jsonEncode({'email': email});
-
-    var response = await http.get(url, headers: {'Accept': 'application/json', "content-type": "application/json"} );
-
-    // print(url);
-    print(response.statusCode);
-
-    if (response.statusCode == 200) {
-      print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
-    }
-    else {
-      print('error : ${response.reasonPhrase}');
-    }
-  }
-
-  changePassword(String email, pass) async {
-
-
-    var url = Uri.http('${serverHttp}:8080', '/user/password/lost');
-
-    final data = jsonEncode({'email': email, 'password': pass});
-
-    var response = await http.post(url, body: data, headers: {'Accept': 'application/json', "content-type": "application/json"} );
-
-    // print(url);
-    print(response.statusCode);
-
-    if (response.statusCode == 200) {
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
-    }
-    else {
-    print('error : ${response.reasonPhrase}');
-    }
-  }
-
 
 
   @override
