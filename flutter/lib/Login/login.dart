@@ -254,12 +254,13 @@ class _LoginPageState extends State<LoginPage> {
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer ${authToken}"
+      "X-AUTH-TOKEN": "${authToken}"
     });
 
     print(url);
     print("Bearer ${authToken}");
     print('Response status: ${response.statusCode}');
+    print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
 
     if (response.statusCode == 200) {
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
