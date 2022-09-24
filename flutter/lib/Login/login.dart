@@ -183,7 +183,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void signIn(String email, pass) async {
-    var url = Uri.http('${serverHttp}:8080', '/user/login');
+    var url = Uri.http('${serverHttp}:8080', '/members/login');
 
     final data = jsonEncode({'email': email, 'password': pass});
 
@@ -208,9 +208,11 @@ class _LoginPageState extends State<LoginPage> {
       ///!! 일단 result 값으로 지정해 놓음. 후에 서버와 논의하여 data값 설정하기.
       //print("token: " + token.toString());
 
-      if (body["result"] == "success") {
-        String token = data["accessToken"];
-        refreshToken = data["refreshToken"];
+      if (body["success"] == true) {
+
+        dynamic res = body["response"];
+        String token = res["accessToken"];
+        refreshToken = res["refreshToken"];
         print("로그인에 성공하셨습니다.");
         authToken = token;
 
@@ -247,7 +249,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void userInfo() async {
-    var url = Uri.http('${serverHttp}:8080', '/user/info');
+    var url = Uri.http('${serverHttp}:8080', '/members/info');
 
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
@@ -264,7 +266,7 @@ class _LoginPageState extends State<LoginPage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      var data = body["data"];
+      var data = body["response"];
       email = data["email"].toString();
       name = data["name"].toString();
     } else {

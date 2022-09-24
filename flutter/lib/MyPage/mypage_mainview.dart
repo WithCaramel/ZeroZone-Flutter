@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:zerozone/Login/refreshToken.dart';
 import '../Login/login.dart';
 
-import 'mypage_bookmarklistview.dart';
-import 'mypage_studylistview.dart';
+// import 'mypage_bookmarklistview.dart';
+// import 'mypage_studylistview.dart';
 import 'mypage_editinformationview.dart';
 import 'mypage_lr_bookmark.dart';
 import 'mypage_sp_bookmark.dart';
