@@ -50,7 +50,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Future<void> emailAuth(String email) async {
-    var url = Uri.http('${serverHttp}:8080', 'email/code/send');
+    var url = Uri.http('${serverHttp}:8080', '/members/auth-code/send');
     final data = jsonEncode({'email': email});
 
     var response = await http.post(url, body: data, headers: {
@@ -61,12 +61,13 @@ class _SignUpPageState extends State<SignUpPage> {
     print(url);
     print('Response status: ${response.statusCode}');
 
+
     if (response.statusCode == 200) {
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
 
       var body = jsonDecode(response.body);
 
-      if(body["result"] != "fail"){
+      if(body["success"] == true){
         showDialog<String>(
           context: context,
           builder: (BuildContext context) => AlertDialog(
@@ -125,7 +126,7 @@ class _SignUpPageState extends State<SignUpPage> {
       'email': email,
     };
     Uri.encodeComponent(email);
-    var url = Uri.http('${serverHttp}:8080', '/user/email', _queryParameters);
+    var url = Uri.http('${serverHttp}:8080', '/members/${email}');
 
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
@@ -140,7 +141,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
       var body = jsonDecode(response.body);
 
-      bool data = body["data"];
+      bool data = body["response"];
 
       print("data: " + data.toString());
 
@@ -175,7 +176,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void signUp(String email, name, pass) async {
-    var url = Uri.http('${serverHttp}:8080', '/user');
+    var url = Uri.http('${serverHttp}:8080', '/members');
 
     final data = jsonEncode({'email': email, 'name': name, 'password': pass});
 
@@ -193,7 +194,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
       var body = jsonDecode(response.body);
 
-      if(body["result"] == "success"){
+      if(body["success"] == true){
         showDialog<String>(
           context: context,
           builder: (BuildContext context) => AlertDialog(
@@ -242,11 +243,11 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   checkAuthCode(String email, authCode) async {
-    var url = Uri.http('${serverHttp}:8080', '/email/code/verify');
+    var url = Uri.http('${serverHttp}:8080', '/members/auth-code/verify');
 
     final data = jsonEncode({'email': email, 'authCode': authCode});
 
-    var response = await http.post(url, body: data, headers: {
+    var response = await http.patch(url, body: data, headers: {
       'Accept': 'application/json',
       "content-type": "application/json"
     });
