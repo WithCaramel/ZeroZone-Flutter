@@ -56,9 +56,9 @@ class _SpSentencePracticePageState extends State<SpSentencePracticePage> {
       'speakingProbId': probId.toString(),
     };
 
-    var url = Uri.http('${serverHttp}:8080', '/bookmark/speaking', _queryParameters);
+    var url = Uri.http('${serverHttp}:8080', '/speaking-practices/bookmark/${probId}');
 
-    var response = await http.post(url, headers: {'Accept': 'application/json', "content-type": "application/json", "Authorization": "Bearer ${authToken}" });
+    var response = await http.post(url, headers: {'Accept': 'application/json', "content-type": "application/json", "X-AUTH-TOKEN": "${authToken}" });
 
     print(url);
 
@@ -67,7 +67,7 @@ class _SpSentencePracticePageState extends State<SpSentencePracticePage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+
 
       print("북마크에 등록되었습니다.");
     }
@@ -90,9 +90,9 @@ class _SpSentencePracticePageState extends State<SpSentencePracticePage> {
       'speakingProbId': probId.toString(),
     };
 
-    var url = Uri.http('104.197.249.40:8080', '/bookmark/speaking', _queryParameters);
+    var url = Uri.http('${serverHttp}:8080', '/speaking-practices/bookmark/${probId}');
 
-    var response = await http.delete(url, headers: {'Accept': 'application/json', "content-type": "application/json", "Authorization": "Bearer ${authToken}" });
+    var response = await http.delete(url, headers: {'Accept': 'application/json', "content-type": "application/json", "X-AUTH-TOKEN": "${authToken}" });
 
     print(url);
 

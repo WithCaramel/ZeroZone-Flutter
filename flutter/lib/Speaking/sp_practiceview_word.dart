@@ -54,9 +54,9 @@ class _SpWordPracticePageState extends State<SpWordPracticePage> {
       'speakingProbId': probId.toString(),
     };
 
-    var url = Uri.http('${serverHttp}:8080', '/bookmark/speaking', _queryParameters);
+    var url = Uri.http('${serverHttp}:8080', '/speaking-practices/bookmark/${probId}');
 
-    var response = await http.post(url, headers: {'Accept': 'application/json', "content-type": "application/json", "Authorization": "Bearer ${authToken}" });
+    var response = await http.post(url, headers: {'Accept': 'application/json', "content-type": "application/json", "X-AUTH-TOKEN": "${authToken}" });
 
     print(url);
 
@@ -88,9 +88,9 @@ class _SpWordPracticePageState extends State<SpWordPracticePage> {
       'speakingProbId': probId.toString(),
     };
 
-    var url = Uri.http('${serverHttp}:8080', '/bookmark/speaking', _queryParameters);
+    var url = Uri.http('${serverHttp}:8080', '/speaking-practices/bookmark/${probId}');
 
-    var response = await http.delete(url, headers: {'Accept': 'application/json', "content-type": "application/json", "Authorization": "Bearer ${authToken}" });
+    var response = await http.delete(url, headers: {'Accept': 'application/json', "content-type": "application/json", "X-AUTH-TOKEN": "${authToken}" });
 
     print(url);
 
