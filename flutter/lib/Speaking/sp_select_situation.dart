@@ -29,12 +29,12 @@ class _SelectSituationPageState extends State<SelectSituationPage> {
   Future<void> getSentence(int situationId, String situation) async {
     Map<String, String> _queryParameters = <String, String>{
       'situationId' : situationId.toString(),
-      'situation' : situation
+
     };
 
-    var url = Uri.http('${serverHttp}:8080', '/speaking/list/situation/sentence', _queryParameters);
+    var url = Uri.http('${serverHttp}:8080', '/speaking-practices/sentence', _queryParameters);
 
-    var response = await http.get(url, headers: {'Accept': 'application/json', "content-type": "application/json", "Authorization": "Bearer ${authToken}" });
+    var response = await http.get(url, headers: {'Accept': 'application/json', "content-type": "application/json", "X-AUTH-TOKEN": "${authToken}" });
 
     print(url);
 
@@ -43,11 +43,11 @@ class _SelectSituationPageState extends State<SelectSituationPage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+      dynamic data = body["response"];
 
       for(dynamic i in data){
         String a = i["sentence"];
-        int b = i["id"];
+        int b = i["probId"];
         sentenceList.add(SentenceList(a, b));
       }
 

@@ -34,12 +34,12 @@ class _ChooseConsonantPageState extends State<ChooseConsonantPage> {
 
     Map<String, String> _queryParameters = <String, String>{
       'onsetId' : index.toString(),
-      'onset' : gridItem
+
     };
 
-    var url = Uri.http('${serverHttp}:8080', '/speaking/list/letter/nucleus', _queryParameters);
+    var url = Uri.http('${serverHttp}:8080', '/speaking-practices/letter/nucleus', _queryParameters);
 
-    var response = await http.get(url, headers: {'Accept': 'application/json', "content-type": "application/json", "Authorization": "Bearer ${authToken}" });
+    var response = await http.get(url, headers: {'Accept': 'application/json', "content-type": "application/json", "X-AUTH-TOKEN": "${authToken}" });
 
     print(url);
 
@@ -48,7 +48,7 @@ class _ChooseConsonantPageState extends State<ChooseConsonantPage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+      dynamic data = body["response"];
 
       print(data);
 

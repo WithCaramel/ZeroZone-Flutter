@@ -61,9 +61,9 @@ class _lrselectModeMainPageState extends State<lrselectModeMainPage> {
 
   Future<void> getWordConsonant() async {
 
-    var url = Uri.http('${serverHttp}:8080', '/speaking/list/letter/onset');
+    var url = Uri.http('${serverHttp}:8080', '/speaking-practices/word/onset');
 
-    var response = await http.get(url, headers: {'Accept': 'application/json', "content-type": "application/json", "Authorization": "Bearer ${authToken}" });
+    var response = await http.get(url, headers: {'Accept': 'application/json', "content-type": "application/json", "X-AUTH-TOKEN": "${authToken}" });
 
     print(url);
 
@@ -72,7 +72,7 @@ class _lrselectModeMainPageState extends State<lrselectModeMainPage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+      dynamic data = body["response"];
 
       print(data);
 
@@ -107,9 +107,9 @@ class _lrselectModeMainPageState extends State<lrselectModeMainPage> {
 
   Future<void> getConsonant() async {
 
-    var url = Uri.http('${serverHttp}:8080', '/speaking/list/letter/onset');
+    var url = Uri.http('${serverHttp}:8080', '/speaking-practices/letter/onset');
 
-    var response = await http.get(url, headers: {'Accept': 'application/json', "content-type": "application/json", "Authorization": "Bearer ${authToken}" });
+    var response = await http.get(url, headers: {'Accept': 'application/json', "content-type": "application/json", "X-AUTH-TOKEN": "${authToken}" });
 
     print(url);
 
@@ -118,7 +118,7 @@ class _lrselectModeMainPageState extends State<lrselectModeMainPage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+      dynamic data = body["response"];
 
       print(data);
 

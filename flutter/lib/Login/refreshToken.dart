@@ -12,9 +12,9 @@ bool check = false;
 
 Future<void> RefreshToken(BuildContext context) async {
 
-  var url = Uri.http('${serverHttp}:8080', '/token/reissue/accessToken');
+  var url = Uri.http('${serverHttp}:8080', '/members/token/reissue');
 
-  final data = jsonEncode({'email': email, 'refreshToken': refreshToken});
+  final data = jsonEncode({'accessToken': authToken, 'refreshToken': refreshToken});
 
   var response = await http.post(url, body: data, headers: {'Accept': 'application/json', "content-type": "application/json"} );
 
@@ -27,7 +27,7 @@ Future<void> RefreshToken(BuildContext context) async {
 
     var body = jsonDecode(response.body);
 
-    if(body["state"] == 400){
+    if(body["success"] == false){
       showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -50,8 +50,8 @@ Future<void> RefreshToken(BuildContext context) async {
         ),
       );
     }
-    else if(body["state"] == 200){
-      dynamic data = body["data"];
+    else if(body["success"] == true){
+      dynamic data = body["response"];
       String token = data["accessToken"];
       refreshToken = data["refreshToken"];
 
