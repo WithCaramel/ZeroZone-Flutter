@@ -18,16 +18,16 @@ class _ModifyInformationPageState extends State<ModifyInformationPage> {
   final TextEditingController _name = new TextEditingController();
 
   Future<void> changeName(String editName) async {
-    var url = Uri.http('${serverHttp}:8080', '/user/name');
+    var url = Uri.http('${serverHttp}:8080', '/members/name');
 
     final data = jsonEncode({'name': editName});
 
     name = editName;
 
-    var response = await http.post(url, body: data, headers: {
+    var response = await http.patch(url, body: data, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer ${authToken}"
+      "X-AUTH-TOKEN": "${authToken}"
     });
 
     print(url);
