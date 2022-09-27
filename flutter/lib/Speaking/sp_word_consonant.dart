@@ -47,16 +47,15 @@ class _ChooseWordConsonantPageState extends State<ChooseWordConsonantPage> {
   void letterInfo(String gridItem, int index) async {
     Map<String, String> _queryParameters = <String, String>{
       'onsetId': index.toString(),
-      'onset': gridItem
     };
 
     var url =
-        Uri.http('${serverHttp}:8080', '/speaking/list/word', _queryParameters);
+        Uri.http('${serverHttp}:8080', '/speaking-practices/word', _queryParameters);
 
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer ${authToken}"
+      "X-AUTH-TOKEN": "${authToken}"
     });
 
     print(url);
@@ -66,11 +65,11 @@ class _ChooseWordConsonantPageState extends State<ChooseWordConsonantPage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+      dynamic data = body["response"];
 
       for (dynamic i in data) {
         String a = i["word"];
-        int b = i["id"];
+        int b = i["probId"];
         wordList.add(WordList(a, b));
       }
 

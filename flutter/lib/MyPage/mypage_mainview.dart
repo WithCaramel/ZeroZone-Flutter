@@ -92,7 +92,7 @@ class _MyPageState extends State<MyPage> {
         _Element=_data['totalElements'];
         for(int i=0;i<_list.length;i++){
           _type.add(_list[i]['type']);
-          _testProbId.add(_list[i]['contentId']);
+          _testProbId.add(_list[i]['probId']);
           _content.add(_list[i]['content']);
         }
       }

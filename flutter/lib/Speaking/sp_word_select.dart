@@ -29,9 +29,9 @@ class _WordSelectPageState extends State<WordSelectPage> {
       'id' : index.toString(),
     };
 
-    var url = Uri.http('${serverHttp}:8080', '/speaking/practice/word', _queryParameters);
+    var url = Uri.http('${serverHttp}:8080', '/speaking-practices/${index}');
 
-    var response = await http.get(url, headers: {'Accept': 'application/json', "content-type": "application/json", "Authorization": "Bearer ${authToken}" });
+    var response = await http.get(url, headers: {'Accept': 'application/json', "content-type": "application/json", "X-AUTH-TOKEN": "${authToken}" });
 
     print(url);
 
@@ -40,13 +40,14 @@ class _WordSelectPageState extends State<WordSelectPage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+      dynamic data = body["response"];
 
       String url = data["url"];
       String type = data["type"];
       int probId = data["probId"];
       bool bookmarked = data["bookmarked"];
       int wordId = data["wordId"];
+      letter = data["content"];
 
       print("url : ${url}");
       print("type : ${type}");
