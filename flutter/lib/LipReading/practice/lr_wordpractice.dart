@@ -164,12 +164,12 @@ class _WordPracticePageState extends State<WordPracticePage> {
     };
 
     var url =
-        Uri.http('${serverHttp}:8080', '/bookmark/reading', _queryParameters);
+        Uri.http('${serverHttp}:8080', '/reading-practices/bookmark/${probId}');
 
     var response = await http.post(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer ${authToken}"
+      "X-AUTH-TOKEN": "${authToken}"
     });
 
     print(url);
@@ -179,7 +179,7 @@ class _WordPracticePageState extends State<WordPracticePage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+      //dynamic data = body["data"];
 
       print("북마크에 등록되었습니다.");
     } else if (response.statusCode == 401) {
@@ -199,12 +199,12 @@ class _WordPracticePageState extends State<WordPracticePage> {
     };
 
     var url =
-        Uri.http('${serverHttp}:8080', '/bookmark/reading', _queryParameters);
+        Uri.http('${serverHttp}:8080', '/reading-practices/bookmark/${probId}');
 
     var response = await http.delete(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer ${authToken}"
+      "X-AUTH-TOKEN": "${authToken}"
     });
 
     print(url);
@@ -214,7 +214,7 @@ class _WordPracticePageState extends State<WordPracticePage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+      //dynamic data = body["data"];
 
       print("북마크가 해제되었습니다.");
     } else if (response.statusCode == 401) {
