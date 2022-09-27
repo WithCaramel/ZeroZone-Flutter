@@ -67,12 +67,12 @@ class _SPBookmarkPageState extends State<SPBookmarkPage> {
     };
 
     var url =
-    Uri.http('${serverHttp}:8080', '/bookmark/reading', _queryParameters);
+    Uri.http('${serverHttp}:8080', '/speaking-practices/bookmark', _queryParameters);
 
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer $authToken"
+      "X-AUTH-TOKEN": "$authToken"
     });
     print(url);
     print('Response status: ${response.statusCode}');
@@ -80,12 +80,12 @@ class _SPBookmarkPageState extends State<SPBookmarkPage> {
     if (response.statusCode == 200) {
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
       var body = jsonDecode(utf8.decode(response.bodyBytes));
-      var _data = body['data'];
+      var _data = body['response'];
       var _list = _data['content'];
       for (int i = 0; i < _list.length; i++) {
         setState(() {
           _type.add(_list[i]['type']);
-          _testProbId.add(_list[i]['id']);
+          _testProbId.add(_list[i]['probId']);
           _content.add(_list[i]['content']);
         });
       }
@@ -139,22 +139,23 @@ class _SPBookmarkPageState extends State<SPBookmarkPage> {
       'id': _testProbId[idx].toString(),
     };
 
-    if (_type[idx] == 'Word') {
-      url = Uri.http(
-          '${serverHttp}:8080', '/speaking/practice/word', _queryParameters);
-    } else if (_type[idx] == 'Sentence') {
-      url = Uri.http(
-          '${serverHttp}:8080', '/speaking/practice/sentence', _queryParameters);
-    }
-    else{
-      url = Uri.http(
-          '${serverHttp}:8080', '/speaking/practice/letter', _queryParameters);
-    }
+    url = Uri.http('${serverHttp}:8080', '/speaking-practices/${_testProbId[idx].toString()}');
+    // if (_type[idx] == 'Word') {
+    //   url = Uri.http(
+    //       '${serverHttp}:8080', '/speaking/practice/word', _queryParameters);
+    // } else if (_type[idx] == 'Sentence') {
+    //   url = Uri.http(
+    //       '${serverHttp}:8080', '/speaking/practice/sentence', _queryParameters);
+    // }
+    // else{
+    //   url = Uri.http(
+    //       '${serverHttp}:8080', '/speaking/practice/letter', _queryParameters);
+    // }
 
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer ${authToken}"
+      "X-AUTH-TOKEN": "${authToken}"
     });
 
     print(url);
@@ -165,15 +166,15 @@ class _SPBookmarkPageState extends State<SPBookmarkPage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+      dynamic data = body["response"];
 
       String url = data["url"];
       String type = data["type"];
       int probId = data["probId"];
       bool bookmarked = data["bookmarked"];
 
-      if (_type[idx] == 'Word') {
-        String word = data["word"];
+      if (_type[idx] == 'WORD') {
+        String word = data["content"];
         type = "word";
         String space = "";
 
@@ -184,8 +185,8 @@ class _SPBookmarkPageState extends State<SPBookmarkPage> {
                 builder: (_) => SpWordPracticePage(probId: probId, type: type,word: word,url: url, bookmarked: bookmarked,)
             )
         );
-      } else if (_type[idx] == 'Sentence') {
-        String word = data["sentence"];
+      } else if (_type[idx] == 'SENTENCE') {
+        String word = data["content"];
         String type = "sentence";
 
         Navigator.push(
@@ -195,9 +196,9 @@ class _SPBookmarkPageState extends State<SPBookmarkPage> {
             ));
       }
       else{
-        String word = data["letter"];
+        String word = data["content"];
         String type = "letter";
-        int letterId = data["letterId"];
+        int letterId = data["probId"];
 
         Navigator.push(
             context,
@@ -338,7 +339,7 @@ class _SPBookmarkPageState extends State<SPBookmarkPage> {
                                                   crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                                   children: [
-                                                    if(_type[idx+10*(_curPage-1)]=='Word')
+                                                    if(_type[idx+10*(_curPage-1)]=='WORD')
                                                       Row(
                                                         children: [
                                                           Container(
@@ -380,7 +381,7 @@ class _SPBookmarkPageState extends State<SPBookmarkPage> {
                                                               alignment: Alignment.center,
                                                               width: MediaQuery.of(context).size.width * 20 / 100,
                                                               padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                                                              child: Text(_type[idx+10*(_curPage-1)]=='Letter'? '글 자' :'문 장',
+                                                              child: Text(_type[idx+10*(_curPage-1)]=='LETTER'? '글 자' :'문 장',
                                                                 style: TextStyle(
                                                                     fontSize: 20, color: Color(0xff333333), fontWeight: FontWeight.w700
                                                                 ),

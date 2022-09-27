@@ -24,6 +24,7 @@ import 'package:zerozone/Speaking/sp_letter_consonant.dart';
 import 'package:zerozone/Speaking/sp_select_situation.dart';
 import 'package:zerozone/LipReading/test/lr_testinfo.dart';
 import 'testReview/lr_reviewmode.dart';
+import 'dart:math';
 
 // class ConsonantList {
 //   final String consonant;
@@ -153,13 +154,18 @@ class _lrselectModeMainPageState extends State<lrselectModeMainPage> {
 
 
   Future<void> letterRandomUrlInfo() async {
-    var url =
-    Uri.http('${serverHttp}:8080', '/speaking/practice/letter/random');
+    int random_num = Random().nextInt(14) + 1;
+
+    Map<String, String> _queryParameters = <String, String>{
+      'onsetId' : random_num.toString(),
+    };
+
+    var url = Uri.http('${serverHttp}:8080', '/speaking-practices/letter/random', _queryParameters);
 
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer ${authToken}"
+      "X-AUTH-TOKEN": "${authToken}"
     });
 
     print(url);
@@ -169,13 +175,13 @@ class _lrselectModeMainPageState extends State<lrselectModeMainPage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+      dynamic data = body["response"];
 
       String url = data["url"];
       String type = data["type"];
       int probId = data["probId"];
-      String letter = data["letter"];
-      int letterId = data["letterId"];
+      String letter = data["content"];
+      int letterId = data["probId"];
       bool bookmarked = data["bookmarked"];
 
       print("url : ${url}");
@@ -206,12 +212,18 @@ class _lrselectModeMainPageState extends State<lrselectModeMainPage> {
   }
 
   Future<void> wordRandomUrlInfo() async {
-    var url = Uri.http('${serverHttp}:8080', '/speaking/practice/word/random');
+    int random_num = Random().nextInt(14) + 1;
+
+    Map<String, String> _queryParameters = <String, String>{
+      'onsetId' : random_num.toString(),
+    };
+
+    var url = Uri.http('${serverHttp}:8080', '/speaking-practices/word/random', _queryParameters);
 
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer ${authToken}"
+      "X-AUTH-TOKEN": "${authToken}"
     });
 
     print(url);
@@ -221,12 +233,12 @@ class _lrselectModeMainPageState extends State<lrselectModeMainPage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+      dynamic data = body["response"];
 
       String url = data["url"];
       String type = data["type"];
       int probId = data["probId"];
-      String word = data["word"];
+      String word = data["content"];
       bool bookmarked = data["bookmarked"];
 
       print("url : ${url}");
@@ -257,13 +269,19 @@ class _lrselectModeMainPageState extends State<lrselectModeMainPage> {
   }
 
   Future<void> sentenceRandomUrlInfo() async {
+    int random_num = Random().nextInt(4) + 1;
+
+    Map<String, String> _queryParameters = <String, String>{
+      'situationId' : random_num.toString(),
+    };
+
     var url =
-    Uri.http('${serverHttp}:8080', '/speaking/practice/sentence/random');
+    Uri.http('${serverHttp}:8080', '/speaking-practices/sentence/random', _queryParameters);
 
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer ${authToken}"
+      "X-AUTH-TOKEN": "${authToken}"
     });
 
     print(url);
@@ -273,12 +291,12 @@ class _lrselectModeMainPageState extends State<lrselectModeMainPage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+      dynamic data = body["response"];
 
       String url = data["url"];
       String type = data["type"];
       int probId = data["probId"];
-      String sentence = data["sentence"];
+      String sentence = data["content"];
       bool bookmarked = data["bookmarked"];
 
       print("url : ${url}");
