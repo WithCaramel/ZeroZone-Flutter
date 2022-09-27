@@ -123,16 +123,16 @@ class _MyPageState extends State<MyPage> {
     _lrcontent.clear();
     _lrtestProbId.clear();
 
-    var url = Uri.http('${serverHttp}:8080', '/bookmark/reading');
+    var url = Uri.http('${serverHttp}:8080', '/reading-practices/bookmark');
 
-    var response = await http.get(url, headers: {'Accept': 'application/json', "content-type": "application/json", "Authorization": "Bearer $authToken"});
+    var response = await http.get(url, headers: {'Accept': 'application/json', "content-type": "application/json", "X-AUTH-TOKEN": "$authToken"});
     print(url);
     print('Response status: ${response.statusCode}');
 
     if (response.statusCode == 200) {
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
       var body = jsonDecode(utf8.decode(response.bodyBytes));
-      var _data=body['data'];
+      var _data=body['response'];
       var _list=_data['content'];
 
       if(_list.isEmpty){
@@ -144,7 +144,7 @@ class _MyPageState extends State<MyPage> {
         _lrElement=_data['totalElements'];
         for(int i=0;i<_list.length;i++){
           _lrtype.add(_list[i]['type']);
-          _lrtestProbId.add(_list[i]['id']);
+          _lrtestProbId.add(_list[i]['probId']);
           _lrcontent.add(_list[i]['content']);
         }
       }
