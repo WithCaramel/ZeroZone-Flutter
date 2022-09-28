@@ -387,10 +387,12 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         Container(
                           margin: EdgeInsets.only(bottom: 15.0),
-                          child: RaisedButton(
-                            color: Color(0xff4478FF),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xff4478FF),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
                             ),
                             child: Text(
                               '인 증',
@@ -445,10 +447,12 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         Container(
                           margin: EdgeInsets.only(bottom: 15.0),
-                          child: RaisedButton(
-                            color: Color(0xff4478FF),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xff4478FF),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
                             ),
                             child: Text(
                               '확 인',
@@ -569,11 +573,13 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 30.0, bottom: 10.0),
-                      child: new RaisedButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                      child: new ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xff4478FF),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
-                        color: Color(0xff4478FF),
                         child: new Text(
                           '회원가입',
                           style: new TextStyle(

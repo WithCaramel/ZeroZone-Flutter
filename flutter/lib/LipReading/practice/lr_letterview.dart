@@ -59,19 +59,18 @@ class _LRChooseWordConsonantPageState extends State<LRChooseWordConsonantPage> {
   late var _probId;
   late var _wordId;
 
-  _randomWord(String onsetId, String onset) async {
+  _randomWord(String onsetId) async {
     Map<String, String> _queryParameters = <String, String>{
       'onsetId': onsetId,
-      'onset': onset
     };
     Uri.encodeComponent(onsetId);
-    var url = Uri.http('${serverHttp}:8080', '/reading/practice/word/random',
+    var url = Uri.http('${serverHttp}:8080', 'reading-practices/word/random',
         _queryParameters);
 
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer $authToken"
+      "X-AUTH-TOKEN": "$authToken"
     });
     print(url);
     // print("Bearer $authToken");
@@ -81,18 +80,18 @@ class _LRChooseWordConsonantPageState extends State<LRChooseWordConsonantPage> {
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
-      data = body["data"];
+      data = body["response"];
       _hint = data['hint'];
-      _word = data['word'];
+      _word = data['content'];
       _url = data['url'];
       _bookmark = data['bookmarked'];
       _probId = data['probId'];
-      _wordId=data['wordId'];
+      _wordId=data['contentId'];
 
     } else if (response.statusCode == 401) {
       await RefreshToken(context);
       if (check == true) {
-        _randomWord(onsetId, onset);
+        _randomWord(onsetId);
         check = false;
       }
     }
@@ -176,8 +175,7 @@ class _LRChooseWordConsonantPageState extends State<LRChooseWordConsonantPage> {
                                               GestureDetector(
                                                   onTap: () async {
                                                     await _randomWord(
-                                                        (index + 1).toString(),
-                                                        data);
+                                                        (index + 1).toString());
                                                     getGridViewSelectedItem(
                                                         context, data, index);
                                                   },

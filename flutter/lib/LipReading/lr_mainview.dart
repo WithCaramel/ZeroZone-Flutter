@@ -333,12 +333,12 @@ class _lrselectModeMainPageState extends State<lrselectModeMainPage> {
     _testId.clear();
     _probCount.clear();
 
-    var url = Uri.http('${serverHttp}:8080', '/reading/test/list');
+    var url = Uri.http('${serverHttp}:8080', '/reading-practices/exams');
 
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer $authToken"
+      "X-AUTH-TOKEN": "$authToken"
     });
     print(url);
     print('Response status: ${response.statusCode}');
@@ -346,7 +346,7 @@ class _lrselectModeMainPageState extends State<lrselectModeMainPage> {
     if (response.statusCode == 200) {
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
       var body = jsonDecode(utf8.decode(response.bodyBytes));
-      var _data = body['data'];
+      var _data = body['response'];
       var _list = _data['content'];
       if (_list.isEmpty) {
         totalPage = 1;
@@ -358,9 +358,9 @@ class _lrselectModeMainPageState extends State<lrselectModeMainPage> {
           DateTime date = DateTime.parse(_list[i]['date']);
           var day = (date.toString()).split(' ');
           _dateList.add(day[0]);
-          _testName.add(_list[i]['testName']);
+          _testName.add(_list[i]['examName']);
           _correctCnt.add(_list[i]['correctCount']);
-          _testId.add(_list[i]['testId']);
+          _testId.add(_list[i]['examId']);
           _probCount.add(_list[i]['probCount']);
         }
       }

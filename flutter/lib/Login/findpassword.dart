@@ -223,10 +223,12 @@ class _findPasswordPageState extends State<findPasswordPage> {
                       width: 240,
                     ),
                     Container(
-                      child: RaisedButton(
-                        color: Color(0xff4478FF),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xff4478FF),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
                         ),
                         child: Text(
                           '인 증',
@@ -269,11 +271,13 @@ class _findPasswordPageState extends State<findPasswordPage> {
                 ),
                 Container(
                   margin: EdgeInsets.only(top:70.0, bottom: 10.0),
-                  child: new RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                  child: new ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xff4478FF),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
-                    color: Color(0xff4478FF),
                     child: new Text(
                       '인증번호 확인',
                       style: new TextStyle(fontSize: 18.0, color: Color(0xffFFFFFF), ),

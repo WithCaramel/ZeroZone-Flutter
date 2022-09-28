@@ -26,20 +26,19 @@ class _LrModeSentencePageState extends State<LrModeSentencePage> {
   late var _bookmarked;
   late var _sentenceId;
 
-  _randomsentence(String situationId, String situation) async {
+  _randomsentence(String situationId) async {
     _space = "";
     Map<String, String> _queryParameters = <String, String>{
       'situationId': situationId,
-      'situation': situation
     };
     // Uri.encodeComponent(situationId);
     var url = Uri.http('${serverHttp}:8080',
-        '/reading/practice/sentence/random', _queryParameters);
+        '/reading-practices/sentence/random', _queryParameters);
 
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer $authToken"
+      "X-AUTH-TOKEN": "$authToken"
     });
     print(url);
     // print("Bearer $authToken");
@@ -49,23 +48,23 @@ class _LrModeSentencePageState extends State<LrModeSentencePage> {
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
-      data = body["data"];
+      data = body["response"];
       // print(data);
 
       setState(() {
         _space=data['spacingInfo'];
-        _sentence = data['sentence'];
+        _sentence = data['content'];
         _hint = data['hint'];
         _url = data['url'];
         _probId = data['probId'];
         _bookmarked = data['bookmarked'];
-        _sentenceId=data['sentenceId'];
+        _sentenceId=data['contentId'];
 
       });
     } else if (response.statusCode == 401) {
       await RefreshToken(context);
       if (check == true) {
-        _randomsentence(situationId, situation);
+        _randomsentence(situationId);
         check = false;
       }
     }
@@ -177,7 +176,7 @@ class _LrModeSentencePageState extends State<LrModeSentencePage> {
                         ),
                         GestureDetector(
                             onTap: () async {
-                              await _randomsentence('1', '인사하기');
+                              await _randomsentence('1');
                               Navigator.of(context).pop();
                               // print('확인: '+_sentence+' '+_space+' '+_hint+' '+_url);
                               Navigator.push(
@@ -228,7 +227,7 @@ class _LrModeSentencePageState extends State<LrModeSentencePage> {
                         Padding(padding: EdgeInsets.all(8.0)),
                         GestureDetector(
                             onTap: () async {
-                              await _randomsentence('2', '날짜와 시간 말하기');
+                              await _randomsentence('2');
                               Navigator.of(context).pop();
                               Navigator.push(
                                   context,
@@ -278,7 +277,7 @@ class _LrModeSentencePageState extends State<LrModeSentencePage> {
                         Padding(padding: EdgeInsets.all(8.0)),
                         GestureDetector(
                             onTap: () async {
-                              await _randomsentence('3', '날씨 말하기');
+                              await _randomsentence('3');
                               Navigator.of(context).pop();
                               Navigator.push(
                                   context,
@@ -328,7 +327,7 @@ class _LrModeSentencePageState extends State<LrModeSentencePage> {
                         Padding(padding: EdgeInsets.all(8.0)),
                         GestureDetector(
                             onTap: () async {
-                              await _randomsentence('4', '부탁 요청하기');
+                              await _randomsentence('4');
                               Navigator.of(context).pop();
                               Navigator.push(
                                   context,
@@ -378,7 +377,7 @@ class _LrModeSentencePageState extends State<LrModeSentencePage> {
                         Padding(padding: EdgeInsets.all(8.0)),
                         GestureDetector(
                             onTap: () async {
-                              await _randomsentence('5', '기분 표현하기');
+                              await _randomsentence('5');
                               Navigator.of(context).pop();
                               Navigator.push(
                                   context,

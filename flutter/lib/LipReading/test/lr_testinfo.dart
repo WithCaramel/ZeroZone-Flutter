@@ -30,14 +30,14 @@ class _lrTestInfoPageState extends State<lrTestInfoPage> {
 
   _wordTest(String title) async {
     print("wordTest");
-    var url = Uri.http('${serverHttp}:8080', '/reading/test/word');
+    var url = Uri.http('${serverHttp}:8080', '/reading-practices/exams/word');
 
-    final data = jsonEncode({'testName': title, 'probsCount': 10});
+    final data = jsonEncode({'examName': title, 'probCount': 10});
 
     var response = await http.post(url, body: data, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer $authToken"
+      "X-AUTH-TOKEN": "$authToken"
     });
 
     // print(url);
@@ -48,7 +48,7 @@ class _lrTestInfoPageState extends State<lrTestInfoPage> {
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
       var body = jsonDecode(utf8.decode(response.bodyBytes));
       res = body;
-      var result = res['data'];
+      var result = res['response'];
       result = result['readingProbResponseDtoList'];
 
       print(result);
@@ -65,14 +65,14 @@ class _lrTestInfoPageState extends State<lrTestInfoPage> {
   }
 
   _sentenceTest(String title) async {
-    var url = Uri.http('${serverHttp}:8080', '/reading/test/sentence');
+    var url = Uri.http('${serverHttp}:8080', '/reading-practices/exams/sentence');
 
-    final data = jsonEncode({'testName': title, 'probsCount': 10});
+    final data = jsonEncode({'examName': title, 'probCount': 10});
 
     var response = await http.post(url, body: data, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer $authToken"
+      "X-AUTH-TOKEN": "$authToken"
     });
 
     // print(url);
@@ -83,7 +83,7 @@ class _lrTestInfoPageState extends State<lrTestInfoPage> {
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
       var body = jsonDecode(utf8.decode(response.bodyBytes));
       res = body;
-      var result = res['data'];
+      var result = res['response'];
       result = result['readingProbResponseDtoList'];
 
       print(result);
@@ -100,14 +100,14 @@ class _lrTestInfoPageState extends State<lrTestInfoPage> {
   }
 
   _randomTest(String title) async {
-    var url = Uri.http('${serverHttp}:8080', '/reading/test/random');
+    var url = Uri.http('${serverHttp}:8080', '/reading-practices/exams/integrate');
 
-    final data = jsonEncode({'testName': title, 'probsCount': 10});
+    final data = jsonEncode({'examName': title, 'probCount': 10});
 
     var response = await http.post(url, body: data, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer $authToken"
+      "X-AUTH-TOKEN": "$authToken"
     });
 
     // print(url);
@@ -118,7 +118,7 @@ class _lrTestInfoPageState extends State<lrTestInfoPage> {
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
       var body = jsonDecode(utf8.decode(response.bodyBytes));
       res = body;
-      var result = res['data'];
+      var result = res['response'];
       result = result['readingProbResponseDtoList'];
 
       print(result);
@@ -142,7 +142,7 @@ class _lrTestInfoPageState extends State<lrTestInfoPage> {
     var response = await http.post(url, body: data, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer $authToken"
+      "X-AUTH-TOKEN": "$authToken"
     });
 
     // print(url);
@@ -153,7 +153,7 @@ class _lrTestInfoPageState extends State<lrTestInfoPage> {
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
       var body = jsonDecode(utf8.decode(response.bodyBytes));
       res = body;
-      var result = res['data'];
+      var result = res['response'];
       result = result['readingProbResponseDtoList'];
 
       print(result);

@@ -114,13 +114,12 @@ class _WordPracticePageState extends State<WordPracticePage> {
       });
   }
 
-  void _randomWord(String onsetId, String onset) async {
+  void _randomWord(String onsetId) async {
     Map<String, String> _queryParameters = <String, String>{
-      'onsetId': onsetId,
-      'onset': onset
+      'onsetId': onsetId
     };
     Uri.encodeComponent(onsetId);
-    var url = Uri.http('${serverHttp}:8080', '/reading/practice/word/random',
+    var url = Uri.http('${serverHttp}:8080', '/reading-practices/word/random',
         _queryParameters);
 
     var response = await http.get(url, headers: {
@@ -140,11 +139,11 @@ class _WordPracticePageState extends State<WordPracticePage> {
       print(data);
       setState(() {
         _hint = data['hint'];
-        _word = data['word'];
+        _word = data['content'];
         _url = data['url'];
         _probId = data['probId'];
         _isStared = data['bookmarked'];
-        _wordId=data['wordId'];
+        _wordId=data['contentId'];
         _controller = VideoPlayerController.network(_url);
         _initializeVideoPlayerFuture = _controller.initialize();
         _controller.setLooping(true);
@@ -152,19 +151,19 @@ class _WordPracticePageState extends State<WordPracticePage> {
     } else if (response.statusCode == 401) {
       await RefreshToken(context);
       if (check == true) {
-        _randomWord(onsetId, onset);
+        _randomWord(onsetId);
         check = false;
       }
     }
   }
 
-  void ReadingBookmark(int probId) async {
+  void ReadingBookmark(int readingProbId) async {
     Map<String, String> _queryParameters = <String, String>{
-      'readingProbId': probId.toString(),
+      'readingProbId': readingProbId.toString(),
     };
 
     var url =
-        Uri.http('${serverHttp}:8080', '/reading-practices/bookmark/${probId}');
+        Uri.http('${serverHttp}:8080', '/reading-practices/bookmark/${readingProbId}');
 
     var response = await http.post(url, headers: {
       'Accept': 'application/json',
@@ -185,7 +184,7 @@ class _WordPracticePageState extends State<WordPracticePage> {
     } else if (response.statusCode == 401) {
       await RefreshToken(context);
       if (check == true) {
-        ReadingBookmark(probId);
+        ReadingBookmark(readingProbId);
         check = false;
       }
     } else {
@@ -967,7 +966,7 @@ class _WordPracticePageState extends State<WordPracticePage> {
 
   void _next() {
     setState(() {
-      _randomWord((widget.id).toString(), widget.onset);
+      _randomWord((widget.id).toString());
       _seeAnswer = false;
       _isInit = true;
       _enterAnswer = true;

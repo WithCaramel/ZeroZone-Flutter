@@ -49,10 +49,11 @@ class _SentenceTestPageState extends State<SentenceTestPage> {
   var _totalTime = 0;
   late Timer _timer;
 
-  late var body = widget.data['data'];
+  late var body = widget.data['response'];
   late var testinfo = body['readingProbResponseDtoList'];
   var pro_num = 1;
 
+  late var _testId=body['id'];
   late var _probId = testinfo[pro_num - 1]['probId'];
   late var _hint = testinfo[pro_num - 1]['hint'];
   late var _ans = testinfo[pro_num - 1]['content'];
@@ -70,15 +71,15 @@ class _SentenceTestPageState extends State<SentenceTestPage> {
   }
 
   _score(int testId, var list, int correctCnt) async {
-    var url = Uri.http('${serverHttp}:8080', '/reading/test/result');
+    var url = Uri.http('${serverHttp}:8080', '/reading-practices/exams/${testId}/result');
 
     final data = jsonEncode(
-        {'testId': testId, 'testResultList': list, 'correctCount': correctCnt});
+        {'examProbResultList': list, 'correctCount': correctCnt});
 
     var response = await http.post(url, body: data, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer $authToken"
+      "X-AUTH-TOKEN": "$authToken"
     });
 
     // print(url);
@@ -903,6 +904,7 @@ class _SentenceTestPageState extends State<SentenceTestPage> {
       _isHint = false;
       _clickHint = false;
       pro_num += 1;
+      _probId = testinfo[pro_num - 1]['probId'];
       _ans = testinfo[pro_num - 1]['content'];
       _url = testinfo[pro_num - 1]['url'];
       _hint = testinfo[pro_num - 1]['hint'];
@@ -919,6 +921,6 @@ class _SentenceTestPageState extends State<SentenceTestPage> {
     bool hint, correct;
     _clickHint ? hint = true : hint = false;
     _isCorrect ? correct = true : correct = false;
-    testResult.add({'usedHint': hint, 'correct': correct});
+    testResult.add({'readingProbId': _probId,'index':pro_num,'usedHint': hint, 'correct': correct});
   }
 }

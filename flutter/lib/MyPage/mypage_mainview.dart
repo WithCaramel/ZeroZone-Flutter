@@ -42,7 +42,7 @@ class _MyPageState extends State<MyPage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      var data = body["data"];
+      var data = body["response"];
       email = data["email"].toString();
       name = data["name"].toString();
 

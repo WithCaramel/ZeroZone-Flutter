@@ -125,14 +125,13 @@ class _SentencePracticePageState extends State<SentencePracticePage> {
     });
   }
 
-  _randomsentence(String situationId, String situation) async {
+  _randomsentence(String situationId) async {
     Map<String, String> _queryParameters = <String, String>{
       'situationId': situationId,
-      'situation': situation
     };
     // Uri.encodeComponent(situationId);
     var url = Uri.http(
-        '${serverHttp}:8080', '/reading/practice/sentence/random', _queryParameters);
+        '${serverHttp}:8080', '/reading-practices/sentence/random', _queryParameters);
 
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
@@ -151,13 +150,13 @@ class _SentencePracticePageState extends State<SentencePracticePage> {
       print(data);
 
       setState(() {
-        _sentence = data['sentence'];
+        _sentence = data['content'];
         _hint = data['hint'];
         _url = data['url'];
         _probId = data['probId'];
         _isStared=data['bookmarked'];
         _space=data['spacingInfo'];
-        _sentenceId=data['sentenceId'];
+        _sentenceId=data['contentId'];
 
         _controller = VideoPlayerController.network(_url);
         _initializeVideoPlayerFuture = _controller.initialize();
@@ -166,18 +165,18 @@ class _SentencePracticePageState extends State<SentencePracticePage> {
     } else if (response.statusCode == 401) {
       await RefreshToken(context);
       if (check == true) {
-        _randomsentence(situationId, situation);
+        _randomsentence(situationId);
         check = false;
       }
     }
   }
-
-  void ReadingBookmark(int probId) async {
+//여기
+  void ReadingBookmark(int readingProbId) async {
     Map<String, String> _queryParameters = <String, String>{
-      'readingProbId': probId.toString(),
+      'readingProbId': readingProbId.toString(),
     };
 
-    var url = Uri.http('${serverHttp}:8080', '/reading-practices/bookmark/${probId}');
+    var url = Uri.http('${serverHttp}:8080', '/reading-practices/bookmark/${readingProbId}');
 
     var response = await http.post(url, headers: {'Accept': 'application/json', "content-type": "application/json", "X-AUTH-TOKEN": "${authToken}" });
 
@@ -195,7 +194,7 @@ class _SentencePracticePageState extends State<SentencePracticePage> {
     else if(response.statusCode == 401){
       await RefreshToken(context);
       if(check == true){
-        ReadingBookmark(probId);
+        ReadingBookmark(readingProbId);
         check = false;
       }
     }
@@ -984,7 +983,7 @@ class _SentencePracticePageState extends State<SentencePracticePage> {
       _controller.pause();
       _controller.setVolume(0.0);
       _space = "";
-      _randomsentence((widget.id).toString(), widget.situation);
+      _randomsentence((widget.id).toString());
       _seeAnswer = false;
       _isInit = true;
       _enterAnswer = true;

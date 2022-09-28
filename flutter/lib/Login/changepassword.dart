@@ -154,11 +154,13 @@ class _changePasswordPageState extends State<changePasswordPage> {
 
                     Container(
                       margin: EdgeInsets.only(top:70.0, bottom: 10.0),
-                      child: new RaisedButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                      child: new ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xff4478FF),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
-                        color: Color(0xff4478FF),
                         child: new Text(
                           '저    장',
                           style: new TextStyle(fontSize: 18.0, color: Color(0xffFFFFFF), ),

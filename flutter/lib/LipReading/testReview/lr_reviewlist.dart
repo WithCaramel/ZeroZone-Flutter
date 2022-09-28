@@ -82,20 +82,21 @@ class _ReviewListPageState extends State<ReviewListPage> {
     late var url;
     print(_testProbId[idx]);
 
-    Map<String, String> _queryParameters = <String, String>{
-      'testProbId': _testProbId[idx].toString(),
-    };
+    var examProbId=_testProbId[idx].toString();
+    // Map<String, String> _queryParameters = <String, String>{
+    //   'testProbId': _testProbId[idx].toString(),
+    // };
 
     print(idx);
     print("type: ${_type[idx]}");
 
     url = Uri.http(
-        '${serverHttp}:8080', '/reading/test/list/probs/result', _queryParameters);
+        '${serverHttp}:8080', '/reading-practices/exams/probs/${examProbId}/result');
 
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer ${authToken}"
+      "X-AUTH-TOKEN": "${authToken}"
     });
 
     print(url);
@@ -106,7 +107,7 @@ class _ReviewListPageState extends State<ReviewListPage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+      dynamic data = body["response"];
       data=data["readingProb"];
 
       String url = data["url"];
@@ -231,7 +232,7 @@ class _ReviewListPageState extends State<ReviewListPage> {
                                             Text(
                                               '${widget.title}',
                                               style: TextStyle(
-                                                fontSize: 28,
+                                                fontSize: 24,
                                                 color: Color(0xff4478FF),
                                                 fontWeight: FontWeight.w600
                                               ),

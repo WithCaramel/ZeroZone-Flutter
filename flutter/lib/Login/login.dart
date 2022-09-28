@@ -138,11 +138,13 @@ class _LoginPageState extends State<LoginPage> {
                       Container(
                         margin: EdgeInsets.only(left: 0.0, top: 40.0, right: 0.0, bottom: 10.0),
 
-                        child: new RaisedButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)
+                        child: new ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xff4478FF),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
-                          color: Color(0xff4478FF),
                           child: new Text(
                             '로그인',
                             style: new TextStyle(
@@ -159,11 +161,13 @@ class _LoginPageState extends State<LoginPage> {
                       Container(
                         margin: EdgeInsets.only(
                             left: 0.0, top: 10.0, right: 0.0, bottom: 0.0),
-                        child: new RaisedButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)
+                        child: new ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xff4478FF),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
-                          color: Color(0xff4478FF),
                           child: new Text(
                             '회원가입',
                             style: new TextStyle(
