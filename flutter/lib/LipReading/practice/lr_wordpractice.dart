@@ -58,7 +58,7 @@ class _WordPracticePageState extends State<WordPracticePage> {
   var data;
   late var _hint = widget.hint;
   late var _word = widget.word;
-  late var _url = widget.url;
+  late var _url = "https://drive.google.com/uc?export=download&id=1seFK8d-Zqa5AOk-ZhP9QqxnniVrTUa8K";
   late var _probId =widget.probId;
   late var _wordId=widget.wordId;
 

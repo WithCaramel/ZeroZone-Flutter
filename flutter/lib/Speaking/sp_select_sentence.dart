@@ -62,7 +62,7 @@ class _SentenceSelectPageState extends State<SentenceSelectPage> {
 
 
 
-      _saveRecent(sentenceId, 'Sentence', letter);
+      _saveRecent(probId, 'Sentence', letter);
 
 
       Navigator.of(context).pop();

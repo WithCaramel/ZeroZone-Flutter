@@ -201,18 +201,18 @@ class _MyPageState extends State<MyPage> {
     // prefs.remove('content');
 
     setState(() {
-      final ret1 = prefs.getStringList('id');
-      final ret2 = prefs.getStringList('type');
-      final ret3 = prefs.getStringList('content');
+      List<String>? ret1 = prefs.getStringList('id');
+      List<String>? ret2 = prefs.getStringList('type');
+      List<String>? ret3 = prefs.getStringList('content');
 
-      int len=ret1!.length;
-      int len2=ret2!.length;
-      int len3=ret3!.length;
+      int len=ret1?.length ?? 0;
+      int len2=ret2?.length ?? 0;
+      int len3=ret3?.length ?? 0;
 
       for (int i = len-1; i >=0; i--) {
-        _recentProbId.add(int.parse(ret1[i]));
-        _recentType.add(ret2[i]);
-        _recentContent.add(ret3[i]);
+        _recentProbId.add(int.parse(ret1![i]));
+        _recentType.add(ret2![i]);
+        _recentContent.add(ret3![i]);
         // print(ret1[i]+' '+ret2[i]+' '+ret3[i]);
       }
     });
@@ -229,19 +229,26 @@ class _MyPageState extends State<MyPage> {
     _recentContent.clear();
 
     final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      final ret1 = prefs.getStringList('s_id');
-      final ret2 = prefs.getStringList('s_type');
-      final ret3 = prefs.getStringList('s_content');
 
-      int len=ret1!.length;
-      int len2=ret2!.length;
-      int len3=ret3!.length;
+    setState(() {
+      List<String>? ret1 = prefs.getStringList('s_id');
+      List<String>? ret2 = prefs.getStringList('s_type');
+      List<String>? ret3 = prefs.getStringList('s_content');
+
+      int len=ret1?.length ?? 0;
+      int len2=ret2?.length ?? 0;
+      int len3=ret3?.length ?? 0;
+
+      print(ret1);
+      // ret1?.clear();
+      // ret2?.clear();
+      // ret3?.clear();
 
       for (int i = len-1; i >=0; i--) {
-        _recentProbId.add(int.parse(ret1[i]));
-        _recentType.add(ret2[i]);
-        _recentContent.add(ret3[i]);
+        _recentProbId.add(int.parse(ret1![i]));
+        _recentType.add(ret2![i]);
+        _recentContent.add(ret3![i]);
+        // print(ret1[i]+' '+ret2[i]+' '+ret3[i]);
       }
     });
 
