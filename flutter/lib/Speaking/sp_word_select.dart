@@ -52,7 +52,7 @@ class _WordSelectPageState extends State<WordSelectPage> {
       print("url : ${url}");
       print("type : ${type}");
 
-      _saveRecent(wordId, 'Word', letter);
+      _saveRecent(probId, 'Word', letter);
 
       Navigator.of(context).pop();
       Navigator.push(

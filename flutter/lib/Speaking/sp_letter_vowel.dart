@@ -121,7 +121,7 @@ class _ChooseVowelPageState extends State<ChooseVowelPage> {
       print("url : ${url}");
       print("type : ${data}");
 
-      _saveRecent(letterId, 'Letter', letter);
+      _saveRecent(probId, 'Letter', letter);
 
 
       Navigator.of(context).pop();
