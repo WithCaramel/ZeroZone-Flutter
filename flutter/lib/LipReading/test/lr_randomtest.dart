@@ -49,10 +49,11 @@ class _RandomTestPageState extends State<RandomTestPage> {
   var _totalTime = 0;
   late Timer _timer;
 
-  late var body = widget.data['data'];
+  late var body = widget.data['response'];
   late var testinfo = body['readingProbResponseDtoList'];
   var pro_num = 1;
 
+  late var _testId=body['id'];
   late var _probId = testinfo[pro_num - 1]['probId'];
   late var _hint = testinfo[pro_num - 1]['hint'];
   late var _ans = testinfo[pro_num - 1]['content'];
@@ -72,15 +73,15 @@ class _RandomTestPageState extends State<RandomTestPage> {
   }
 
   _score(int testId, var list, int correctCnt) async {
-    var url = Uri.http('${serverHttp}:8080', '/reading/test/result');
+    var url = Uri.http('${serverHttp}:8080', '/reading-practices/exams/${testId}/result');
 
     final data = jsonEncode(
-        {'testId': testId, 'testResultList': list, 'correctCount': correctCnt});
+        {'examProbResultList': list, 'correctCount': correctCnt});
 
     var response = await http.post(url, body: data, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer $authToken"
+      "X-AUTH-TOKEN": "$authToken"
     });
 
     // print(url);
@@ -112,7 +113,7 @@ class _RandomTestPageState extends State<RandomTestPage> {
     var response = await http.post(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer ${authToken}"
+      "X-AUTH-TOKEN": "${authToken}"
     });
 
     print(url);
@@ -122,7 +123,7 @@ class _RandomTestPageState extends State<RandomTestPage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+      dynamic data = body["response"];
 
       print("북마크에 등록되었습니다.");
     } else if (response.statusCode == 401) {
@@ -147,7 +148,7 @@ class _RandomTestPageState extends State<RandomTestPage> {
     var response = await http.delete(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer ${authToken}"
+      "X-AUTH-TOKEN": "${authToken}"
     });
 
     print(url);
@@ -157,7 +158,7 @@ class _RandomTestPageState extends State<RandomTestPage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+      dynamic data = body["response"];
 
       print("북마크가 해제되었습니다.");
     } else if (response.statusCode == 401) {
@@ -602,7 +603,7 @@ class _RandomTestPageState extends State<RandomTestPage> {
                                                     _check();
                                                     if (pro_num == 10) {
                                                       _controller.pause();
-                                                      await _score(body['id'], testResult, _correct_num);
+                                                      await _score(_testId ,testResult, _correct_num);
                                                       Navigator.push(
                                                           context,
                                                           MaterialPageRoute(
@@ -1000,6 +1001,6 @@ class _RandomTestPageState extends State<RandomTestPage> {
     bool hint, correct;
     _clickHint ? hint = true : hint = false;
     _isCorrect ? correct = true : correct = false;
-    testResult.add({'usedHint': hint, 'correct': correct});
+    testResult.add({'readingProbId':_probId,'index':pro_num, 'usedHint': hint, 'correct': correct});
   }
 }

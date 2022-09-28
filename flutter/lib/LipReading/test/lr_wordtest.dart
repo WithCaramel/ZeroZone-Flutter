@@ -49,7 +49,7 @@ class _WordTestPageState extends State<WordTestPage> {
   var _totalTime = 0;
   late Timer _timer;
 
-  late var body = widget.data['data'];
+  late var body = widget.data['response'];
   late var testinfo = body['readingProbResponseDtoList'];
   var pro_num = 1;
 
@@ -70,15 +70,15 @@ class _WordTestPageState extends State<WordTestPage> {
   }
 
   _score(int testId, var list, int correctCnt) async {
-    var url = Uri.http('${serverHttp}:8080', '/reading/test/result');
+    var url = Uri.http('${serverHttp}:8080', '/reading-practices/exams/${testId}/result');
 
     final data = jsonEncode(
-        {'testId': testId, 'testResultList': list, 'correctCount': correctCnt});
+        {'examProbResultList': list, 'correctCount': correctCnt});
 
     var response = await http.post(url, body: data, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer $authToken"
+      "X-AUTH-TOKEN": "$authToken"
     });
 
     // print(url);
@@ -911,6 +911,6 @@ class _WordTestPageState extends State<WordTestPage> {
     bool hint, correct;
     _clickHint ? hint = true : hint = false;
     _isCorrect ? correct = true : correct = false;
-    testResult.add({'usedHint': hint, 'correct': correct});
+    testResult.add({'readingProbId':_probId,'index':pro_num,'usedHint': hint, 'correct': correct});
   }
 }

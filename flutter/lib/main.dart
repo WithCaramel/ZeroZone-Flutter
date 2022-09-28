@@ -8,6 +8,7 @@ import 'LipReading/practice/lr_wordpractice.dart';
 
 void main() {
   runApp(new MaterialApp(
+      debugShowCheckedModeBanner: false,
     home: new SplashScreen(),
     routes: <String, WidgetBuilder>{
       '/login': (BuildContext context) => new LoginPage()

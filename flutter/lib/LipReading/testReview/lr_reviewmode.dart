@@ -101,17 +101,18 @@ class _ReviewModePageState extends State<ReviewModePage> {
     _correct.clear();
     _testProbId.clear();
 
-    Map<String, String> _queryParameters = <String, String>{
-      'testId': id.toString()
-    };
+    var testId=id.toString();
+    // Map<String, String> _queryParameters = <String, String>{
+    //   'testId': id.toString()
+    // };
 
     var url = Uri.http(
-        '${serverHttp}:8080', '/reading/test/list/probs', _queryParameters);
+          '${serverHttp}:8080', '/reading-practices/exams/${testId}');
 
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer $authToken"
+      "X-AUTH-TOKEN": "$authToken"
     });
     print(url);
     print('Response status: ${response.statusCode}');
@@ -119,11 +120,11 @@ class _ReviewModePageState extends State<ReviewModePage> {
     if (response.statusCode == 200) {
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
       var body = jsonDecode(utf8.decode(response.bodyBytes));
-      var _data = body['data'];
+      var _data = body['response'];
       var _list = _data['content'];
       for (int i = 0; i < _list.length; i++) {
         _type.add(_list[i]['type']);
-        _testProbId.add(_list[i]['testProbId']);
+        _testProbId.add(_list[i]['examProbId']);
         _content.add(_list[i]['content']);
         _correct.add(_list[i]['correct']);
       }
@@ -291,7 +292,7 @@ class _ReviewModePageState extends State<ReviewModePage> {
                                               Text(
                                                 _testName[idx+10*(_curPage-1)],
                                                 style: TextStyle(
-                                                  fontSize: 19,
+                                                  fontSize: 18,
                                                   color: Color(0xff333333),
                                                   // fontWeight: FontWeight.w500,
                                                 ),
