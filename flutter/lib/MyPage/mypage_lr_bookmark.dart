@@ -82,24 +82,23 @@ class _LRBookmarkPageState extends State<LRBookmarkPage> {
   Future<void> practiceLipReading(int idx) async {
     late var url;
 
-    Map<String, String> _queryParameters = <String, String>{
-      'id': _testProbId[idx].toString(),
-    };
-    print(idx);
-    print("type: ${_type[idx]}");
+    var probId=_testProbId[idx].toString();
+    // Map<String, String> _queryParameters = <String, String>{
+    //   'id': _testProbId[idx].toString(),
+    // };
 
-    if (_type[idx] == 'Word') {
-      url = Uri.http(
-          '${serverHttp}:8080', '/reading/practice/word', _queryParameters);
-    } else if (_type[idx] == 'Sentence') {
-      url = Uri.http(
-          '${serverHttp}:8080', '/reading/practice/sentence', _queryParameters);
-    }
+    url = Uri.http(
+        '${serverHttp}:8080', '/reading-practices/${probId}');
+
+    // else if (_type[idx] == 'Sentence') {
+    //   url = Uri.http(
+    //       '${serverHttp}:8080', '/reading/practice/sentence', _queryParameters);
+    // }
 
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer ${authToken}"
+      "X-AUTH-TOKEN": "${authToken}"
     });
 
     print(url);
@@ -110,28 +109,18 @@ class _LRBookmarkPageState extends State<LRBookmarkPage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+      dynamic data = body["response"];
 
       String url = data["url"];
       String type = data["type"];
       int probId = data["probId"];
       bool bookmarked = data["bookmarked"];
-      String content;
+      String content=data["content"];
       String space=data["spacingInfo"];
       String hint=data["hint"];
 
-      if (_type[idx] == 'Word') {
-        content=data["word"];
         Navigator.push(context,
             MaterialPageRoute(builder: (_) => BookmarkPracticePage(probId: probId, content: content, hint: hint, url: url, bookmarked: bookmarked, type: type, space: space,)));
-      } else if (_type[idx] == 'Sentence') {
-        content=data["sentence"];
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) => BookmarkPracticePage(probId: probId, content: content, hint: hint, url: url, bookmarked: bookmarked, type: type, space: space,)));
-
-      }
 
     } else if (response.statusCode == 401) {
       await RefreshToken(context);
@@ -237,7 +226,7 @@ class _LRBookmarkPageState extends State<LRBookmarkPage> {
                                                   color: Color(0xffFFFFFF),
                                                   border: Border(
                                                       left: BorderSide(
-                                                        color: _type[idx+10*(_curPage-1)] == "Word" ? Color(0xff2D31FA) : (_type[idx+10*(_curPage-1)] == "Sentence" ? Color(0xff161D6E) : Color(0xff00BBF0)),
+                                                        color: _type[idx+10*(_curPage-1)] == "WORD" ? Color(0xff2D31FA) : (_type[idx+10*(_curPage-1)] == "SENTENCE" ? Color(0xff161D6E) : Color(0xff00BBF0)),
                                                         width: 5.0,
                                                       ),
                                                       right: BorderSide(
@@ -269,7 +258,7 @@ class _LRBookmarkPageState extends State<LRBookmarkPage> {
                                                   crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                                   children: [
-                                                    if(_type[idx+10*(_curPage-1)]=='Word')
+                                                    if(_type[idx+10*(_curPage-1)]=='WORD')
                                                       Row(
                                                           children: [
                                                             Container(
@@ -311,7 +300,7 @@ class _LRBookmarkPageState extends State<LRBookmarkPage> {
                                                               alignment: Alignment.center,
                                                               width: MediaQuery.of(context).size.width * 20 / 100,
                                                               padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                                                              child: Text(_type[idx+10*(_curPage-1)]=='Letter'? '글 자' :'문 장',
+                                                              child: Text(_type[idx+10*(_curPage-1)]=='LETTER'? '글 자' :'문 장',
                                                                 style: TextStyle(
                                                                     fontSize: 20, color: Color(0xff333333), fontWeight: FontWeight.w700
                                                                 ),

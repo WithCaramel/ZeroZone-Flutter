@@ -467,7 +467,7 @@ class _SpLetterPracticePageState extends State<SpLetterPracticePage> {
                                   child: Text(
                                     '${widget.letter}',
                                     style: TextStyle(
-                                      fontSize: 30, fontWeight: FontWeight.w600,
+                                      fontSize: 20, fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 )
@@ -517,7 +517,7 @@ class _SpLetterPracticePageState extends State<SpLetterPracticePage> {
                                       child: Text(
                                         '${_text}',
                                         style: const TextStyle(
-                                          fontSize: 30.0,
+                                          fontSize: 20.0,
                                           color: Color(0xffFFFFFF),
                                           fontWeight: FontWeight.w600,
                                         ),

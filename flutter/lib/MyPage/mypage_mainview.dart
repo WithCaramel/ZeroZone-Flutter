@@ -385,7 +385,7 @@ class _MyPageState extends State<MyPage> {
                                                           margin: EdgeInsets.only(left: 40.0),
                                                           child: Text(
                                                             "${name}",
-                                                            style: TextStyle(fontSize: 32, height: 1.8, fontWeight: FontWeight.w700),
+                                                            style: TextStyle(fontSize: 24, height: 1.8, fontWeight: FontWeight.w700),
                                                           ),
                                                         ),
 

@@ -44,7 +44,6 @@ class _lrTestInfoPageState extends State<lrTestInfoPage> {
     print(response.statusCode);
 
     if (response.statusCode == 200) {
-      print('Response status: ${response.statusCode}');
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
       var body = jsonDecode(utf8.decode(response.bodyBytes));
       res = body;
@@ -79,14 +78,16 @@ class _lrTestInfoPageState extends State<lrTestInfoPage> {
     print(response.statusCode);
 
     if (response.statusCode == 200) {
-      print('Response status: ${response.statusCode}');
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
       var body = jsonDecode(utf8.decode(response.bodyBytes));
       res = body;
       var result = res['response'];
       result = result['readingProbResponseDtoList'];
 
-      print(result);
+      print("content response");
+      for(int i=0;i<10;i++) {
+        print(result[i]['content']);
+      }
 
     } else if (response.statusCode == 401) {
       await RefreshToken(context);

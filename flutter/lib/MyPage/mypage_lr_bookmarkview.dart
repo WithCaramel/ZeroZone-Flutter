@@ -512,7 +512,7 @@ class _BookmarkPracticePageState extends State<BookmarkPracticePage> {
                             ),
                           ],
                         ),
-                        _type=='sentence'?
+                        _type=='SENTENCE'?
                         Container(
                           child: Text(_space,
                               style: TextStyle(
@@ -540,26 +540,26 @@ class _BookmarkPracticePageState extends State<BookmarkPracticePage> {
                           if (!_seeAnswer) ...{
                             if (_enterAnswer)...{
                               _Answer(),
-                              _type=='sentence'?
+                              _type=='SENTENCE'?
                               Padding(padding: EdgeInsets.all(43.0)):
                               Padding(padding: EdgeInsets.all(50.0))
                             }
                             else...{
                               _reAnswer(),
-                              _type=='sentence'?
+                              _type=='SENTENCE'?
                               Padding(padding: EdgeInsets.all(27.0)):
                               Padding(padding: EdgeInsets.all(34.0))
                             }
                           } else ...{
                             if (_isCorrect)...{
                               _Correct(),
-                              _type=='sentence'?
+                              _type=='SENTENCE'?
                               Padding(padding: EdgeInsets.all(18.0)):
                               Padding(padding: EdgeInsets.all(25.0))
                             }
                             else...{
                               _Wrong(),
-                              _type=='sentence'?
+                              _type=='SENTENCE'?
                               Padding(padding: EdgeInsets.all(10.0)):
                               Padding(padding: EdgeInsets.all(15.0))
                             }
