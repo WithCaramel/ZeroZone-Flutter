@@ -34,26 +34,17 @@ class _lrRecentStudyPageState extends State<lrRecentStudyPage> {
   late int totalPage = _content.length%10 == 0 ? _content.length~/10: _content.length~/10+1;
 
   Future<void> practiceLipReading(int idx) async {
-    late var url;
+    var probId= _probId[idx].toString();
+    // Map<String, String> _queryParameters = <String, String>{
+    //   'id': _probId[idx].toString(),
+    // };
 
-    Map<String, String> _queryParameters = <String, String>{
-      'id': _probId[idx].toString(),
-    };
-    print(idx);
-    print("type: ${_type[idx]}");
-
-    if (_type[idx] == 'word') {
-      url = Uri.http(
-          '${serverHttp}:8080', '/reading/practice/word', _queryParameters);
-    } else if (_type[idx] == 'sentence') {
-      url = Uri.http(
-          '${serverHttp}:8080', '/reading/practice/sentence', _queryParameters);
-    }
+    var url = Uri.http('${serverHttp}:8080', '/reading-practices/${probId}');
 
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer ${authToken}"
+      "X-AUTH-TOKEN": "${authToken}"
     });
 
     print(url);
@@ -64,28 +55,18 @@ class _lrRecentStudyPageState extends State<lrRecentStudyPage> {
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
-      dynamic data = body["data"];
+      dynamic data = body["response"];
 
       String url = data["url"];
       String type = data["type"];
       int probId = data["probId"];
       bool bookmarked = data["bookmarked"];
-      String content;
+      String content=data["content"];
       String space=data["spacingInfo"];
       String hint=data["hint"];
 
-      if (_type[idx] == 'word') {
-        content=data["word"];
-        Navigator.push(context,
-            MaterialPageRoute(builder: (_) => BookmarkPracticePage(probId: probId, content: content, hint: hint, url: url, bookmarked: bookmarked, type: type, space: space,)));
-      } else if (_type[idx] == 'sentence') {
-        content=data["sentence"];
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) => BookmarkPracticePage(probId: probId, content: content, hint: hint, url: url, bookmarked: bookmarked, type: type, space: space,)));
-
-      }
+      Navigator.push(context,
+          MaterialPageRoute(builder: (_) => BookmarkPracticePage(probId: probId, content: content, hint: hint, url: url, bookmarked: bookmarked, type: type, space: space,)));
 
     } else if (response.statusCode == 401) {
       await RefreshToken(context);

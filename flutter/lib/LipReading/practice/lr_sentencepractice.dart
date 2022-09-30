@@ -83,6 +83,12 @@ class _SentencePracticePageState extends State<SentencePracticePage> {
 
   }
 
+  void dispose(){
+    _controller.dispose();
+
+    super.dispose();
+  }
+
   List<String> _recentProbId = [];
   List<String> _recentType=[];
   List<String> _recentContent=[];
@@ -136,7 +142,7 @@ class _SentencePracticePageState extends State<SentencePracticePage> {
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer $authToken"
+      "X-AUTH-TOKEN": "$authToken"
     });
     print(url);
     // print("Bearer $authToken");
@@ -146,7 +152,7 @@ class _SentencePracticePageState extends State<SentencePracticePage> {
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
-      data = body["data"];
+      data = body["response"];
       print(data);
 
       setState(() {
@@ -286,6 +292,7 @@ class _SentencePracticePageState extends State<SentencePracticePage> {
                     child: IconButton(
                       onPressed: () {
                         setState(() {
+                          _controller.setLooping(false);
                           _controller.pause();
                         });
                         Navigator.pop(context);
@@ -980,10 +987,8 @@ class _SentencePracticePageState extends State<SentencePracticePage> {
 
   void _next() {
     setState(() {
-      _controller.pause();
-      _controller.setVolume(0.0);
-      _space = "";
       _randomsentence((widget.id).toString());
+      _space = "";
       _seeAnswer = false;
       _isInit = true;
       _enterAnswer = true;
@@ -991,6 +996,13 @@ class _SentencePracticePageState extends State<SentencePracticePage> {
       myController.text = "";
       _isHint = false;
       _volume=false;
+      _controller.dispose();
+      _controller = VideoPlayerController.network(_url);
+      _initializeVideoPlayerFuture = _controller.initialize();
+      _volume?
+      _controller.setVolume(1.0): _controller.setVolume(0.0);
+      _controller.setPlaybackSpeed(_videoSpeed);
+      _controller.setLooping(true);
     });
   }
 }

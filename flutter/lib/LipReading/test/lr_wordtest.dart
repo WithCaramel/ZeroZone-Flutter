@@ -101,7 +101,7 @@ class _WordTestPageState extends State<WordTestPage> {
 
   void dispose() {
     _timer.cancel();
-    _controller.pause();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -896,9 +896,9 @@ class _WordTestPageState extends State<WordTestPage> {
       _ans = testinfo[pro_num - 1]['content'];
       _url = testinfo[pro_num - 1]['url'];
       _hint = testinfo[pro_num - 1]['hint'];
+      _controller.dispose();
       _controller = VideoPlayerController.network(_url);
       _initializeVideoPlayerFuture = _controller.initialize();
-      _controller.pause();
       _volume?
         _controller.setVolume(1.0): _controller.setVolume(0.0);
       _controller.setPlaybackSpeed(_videoSpeed);

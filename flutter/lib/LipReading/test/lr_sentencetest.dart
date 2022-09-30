@@ -102,7 +102,8 @@ class _SentenceTestPageState extends State<SentenceTestPage> {
 
   void dispose() {
     _timer.cancel();
-    _controller.pause();
+    _controller.dispose();
+
     super.dispose();
   }
 
@@ -894,8 +895,6 @@ class _SentenceTestPageState extends State<SentenceTestPage> {
   void _next() {
     setState(() {
       _timer.cancel();
-      _controller.pause();
-      _controller.setVolume(0.0);
       _seeAnswer = false;
       _isInit = true;
       _enterAnswer = true;
@@ -909,10 +908,13 @@ class _SentenceTestPageState extends State<SentenceTestPage> {
       _url = testinfo[pro_num - 1]['url'];
       _hint = testinfo[pro_num - 1]['hint'];
       _space = testinfo[pro_num - 1]['spacingInfo'];
+      _controller.dispose();
       _controller = VideoPlayerController.network(_url);
       _initializeVideoPlayerFuture = _controller.initialize();
+      _volume?
+      _controller.setVolume(1.0): _controller.setVolume(0.0);
+      _controller.setPlaybackSpeed(_videoSpeed);
       _controller.setLooping(true);
-      _volume=false;
       _start();
     });
   }

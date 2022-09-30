@@ -307,7 +307,7 @@ class _SPBookmarkPageState extends State<SPBookmarkPage> {
                                                   color: Color(0xffFFFFFF),
                                                   border: Border(
                                                     left: BorderSide(
-                                                      color: _type[idx+10*(_curPage-1)] == "Word" ? Color(0xff2D31FA) : (_type[idx+10*(_curPage-1)] == "Sentence" ? Color(0xff161D6E) : Color(0xff00BBF0)),
+                                                      color: _type[idx+10*(_curPage-1)] == "WORD" ? Color(0xff2D31FA) : (_type[idx+10*(_curPage-1)] == "SENTENCE" ? Color(0xff161D6E) : Color(0xff00BBF0)),
                                                       width: 5.0,
                                                     ),
                                                     right: BorderSide(

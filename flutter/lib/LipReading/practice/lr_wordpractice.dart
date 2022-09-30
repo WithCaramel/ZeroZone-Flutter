@@ -58,7 +58,7 @@ class _WordPracticePageState extends State<WordPracticePage> {
   var data;
   late var _hint = widget.hint;
   late var _word = widget.word;
-  late var _url = "https://drive.google.com/uc?export=download&id=1seFK8d-Zqa5AOk-ZhP9QqxnniVrTUa8K";
+  late var _url = widget.url;
   late var _probId =widget.probId;
   late var _wordId=widget.wordId;
 
@@ -125,7 +125,7 @@ class _WordPracticePageState extends State<WordPracticePage> {
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer $authToken"
+      "X-AUTH-TOKEN": "$authToken"
     });
     print(url);
     // print("Bearer $authToken");
@@ -135,7 +135,7 @@ class _WordPracticePageState extends State<WordPracticePage> {
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
 
       var body = jsonDecode(utf8.decode(response.bodyBytes));
-      data = body["data"];
+      data = body["response"];
       print(data);
       setState(() {
         _hint = data['hint'];
@@ -276,6 +276,7 @@ class _WordPracticePageState extends State<WordPracticePage> {
                             child: IconButton(
                               onPressed: () {
                                 setState(() {
+                                  _controller.setLooping(false);
                                   _controller.pause();
                                 });
                                 Navigator.pop(context);
@@ -973,13 +974,13 @@ class _WordPracticePageState extends State<WordPracticePage> {
       _isCorrect = false;
       myController.text = "";
       _isHint = false;
+      _controller.dispose();
+      _controller = VideoPlayerController.network(_url);
       _initializeVideoPlayerFuture = _controller.initialize();
       _volume?
       _controller.setVolume(1.0): _controller.setVolume(0.0);
       _controller.setPlaybackSpeed(_videoSpeed);
-      _controller.pause();
       _controller.setLooping(true);
-
     });
   }
 }
